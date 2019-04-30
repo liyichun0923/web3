@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            background-image: url('liyichun.png');
+            background-size : 100% 100%;
+            width: 350px;
+            height: 350px;
+            border: 1px solid #000;
+            float:left;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div style="color:salmon; font-size:30px; font-family:'楷体'; font-style:italic; float:left;">
+        刮开左边的灰色部分,</br>
+        你会获得一个美丽的小姐姐哦!!!
+    </div>
+</body>
+<script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    
+    ctx.beginPath();
+    ctx.fillStyle = "#999";
+    ctx.fillRect(0,0,350,350);
+    ctx.fill();
+    ctx.closePath();
+    
+    canvas.onmousedown = function () {
+        canvas.onmousemove = function (e) {
+            var event = e || window.event;
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(e.clientX, e.clientY, 15, 0, Math.PI*2, false);
+            ctx.fillStyle = "rgba(0,0,0,1)";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+
+        // var img = ctx.getImageData(0,0,350,350);
+        // var tan = 0;
+        // for(var i=0;i<img.data.length;i+=4){
+        //     var a = img.data[i+3];
+        //     if(a<10){
+        //         tan++;
+        //     }
+        // }
+        // var per = tan/(img.data.length/4);
+        // if(per>=0.85){
+        //     ctx.fillRect(0,0,350,350);
+        //     canvas.onmousemove = function () {
+        //     }
+        // }
+
+
+        canvas.onmouseup = function () {
+            canvas.onmousemove = function () {
+                return false;
+            }
+        }
+    }
+</script>
+</html>
